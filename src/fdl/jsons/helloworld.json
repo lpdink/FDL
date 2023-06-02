@@ -1,0 +1,94 @@
+{
+    "task": {
+        "name": "BaseTask"
+    },
+    "hparams": {
+        "save_path": "./resources/ckpts",
+        "seed": 0,
+        "continue_train":false,
+        "use_tensorboard":true
+    },
+    "train":{
+        "device": "cuda:0",
+        "epochs": 100,
+        "save_epoch_num": 20,
+        "batch_size": 64
+    },
+    "infer": {
+        "device": "cuda:0"
+    },
+    "deploy":{
+
+    },
+    "objects": [
+        {
+            "name": "MainLoop",
+            "clazz": "loop.BaseLoop",
+            "args": {
+                "model": "${model}",
+                "dataset": "${dataset}"
+            }
+        },
+        {
+            "name": "model",
+            "clazz": "model.BaseModel",
+            "train_from":null,
+            "infer_from":null,
+            "args": {
+                "inputs_sizes": [[784]],
+                "outputs_sizes": [[10]],
+                "layers_args": [
+                    ["Linear", [784, 128]],
+                    ["ReLU"],
+                    ["Linear", [128, 10]],
+                    ["ReLU"]
+                ],
+                "opt": "${opt}",
+                "loss_f": "${loss_f}"
+            }
+        },
+        {
+            "name": "dataset",
+            "clazz": "dataset.BaseDataset",
+            "args": {
+                "dataset_name":"MNIST",
+                "transform":"${transform}",
+                "train_pct": 0.9,
+                "random_twins": true,
+                "shuffle": true,
+                "num_workers": 4,
+                "pin_memory": false,
+                "root": "./resources/dataset/mnist",
+                "download": true
+            }
+        },
+        {
+            "name":"transform",
+            "clazz":"transform.BaseTransfrom",
+            "args":{
+                "transforms_args":[
+                    [
+                        ["ToTensor"],
+                        ["Normalize", [0.5, 0.5]]
+                    ]
+                ]
+            }
+        },
+        {
+            "name": "opt",
+            "clazz": "opt.BaseOpt",
+            "args": {
+                "opt_name":"SGD",
+                "lr": 0.003,
+                "momentum": 0.9
+            }
+        },
+        {
+            "name": "loss_f",
+            "clazz": "loss.BaseLoss",
+            "args":{
+                "loss_name":"CrossEntropyLoss"
+            }
+        }
+    ]
+}

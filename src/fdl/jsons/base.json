@@ -1,0 +1,24 @@
+{
+    "task": {
+        "name": "BaseTask"
+    },
+    "hparams": {
+        "save_path": "./resources/ckpts",
+        "seed": 0,
+        "continue_train":false,
+        "use_tensorboard":true
+    },
+    "train":{
+        "device": "cuda:0",
+        "epochs": 100,
+        "save_epoch_num": 20,
+        "batch_size": 64
+    },
+    "infer": {
+        "device": "cuda:0"
+    },
+    "deploy":{
+
+    },
+    "objects": []
+}

@@ -1,0 +1,17 @@
+{
+    "MNIST":{
+        "name": "dataset",
+        "clazz": "dataset.BaseDataset",
+        "args": {
+            "dataset_name":"MNIST",
+            "transform":"${transform}",
+            "train_pct": 0.9,
+            "random_split": true,
+            "shuffle": true,
+            "num_workers": 4,
+            "pin_memory": false,
+            "root": "./resources/dataset/mnist",
+            "download": true
+        }
+    }
+}

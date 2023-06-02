@@ -1,0 +1,13 @@
+[project]
+name = "fdl"
+version = "0.0.1"
+dependencies = []
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[project.scripts]
+fdl = "fdl:main"
